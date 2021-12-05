@@ -31,5 +31,15 @@ def add_new_stock(symbol):
     return ''
 
 
+@app.route("/delete/stock/<symbol>")
+def delete_stock_info(symbol):
+    """
+    删除指定股票信息
+    :param symbol: 要删除股票的symbol
+    """
+    stock_info_service.delete_stock_info(symbol)
+    return ''
+
+
 if __name__ == '__main__':
     app.run()

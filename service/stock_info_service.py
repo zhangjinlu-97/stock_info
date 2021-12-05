@@ -36,6 +36,14 @@ def update_stock_infos():
         stock_info_dao.update_stock_info(si.id, new_si)
 
 
+def delete_stock_info(symbol):
+    """
+    删除指定股票信息
+    :param symbol: 要删除股票的symbol
+    """
+    stock_info_dao.delete_stock_info(symbol)
+
+
 def get_new_stock_info(stock_symbol: str) -> StockInfo:
     """
     获取最新股票信息

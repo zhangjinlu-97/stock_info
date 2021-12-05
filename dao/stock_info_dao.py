@@ -48,13 +48,24 @@ def update_stock_info(sid: int, new_stock_info: StockInfo):
     conn.close()
 
 
+def delete_stock_info(symbol: str):
+    """
+        删除指定股票信息
+        :param symbol: 要删除股票的symbol
+    """
+    conn = DBSession()
+    conn.query(StockInfo).filter(StockInfo.symbol == symbol).delete()
+    conn.commit()
+    conn.close()
+
+
 if __name__ == '__main__':
-    si = StockInfo(symbol='AMD'
-                   , company_name='Advanced Micro Devices Inc'
-                   , refresh_time=time.mktime(time.strptime('2021-12-03 20:00:00', "%Y-%m-%d %H:%M:%S"))
-                   , open=143.65
-                   , high=143.6501
-                   , low=143.5000
-                   , close=143.5100
-                   , volume=7715)
-    update_stock_info(6, si)
+    si = StockInfo(symbol='NTES'
+                   , company_name='NetEase Inc'
+                   , refresh_time=time.mktime(time.strptime('2021-12-03 16:55:00', "%Y-%m-%d %H:%M:%S"))
+                   , open=101.9900
+                   , high=101.9900
+                   , low=101.9900
+                   , close=101.9900
+                   , volume=100)
+    insert_stock_info(si)
