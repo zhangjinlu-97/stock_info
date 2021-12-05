@@ -1,1 +1,1 @@
-from entity.stock_info import StockInfo
+from entity.stock_info import StockInfo, StockInfoEncoder

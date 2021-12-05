@@ -1,10 +1,11 @@
 import json
 
 from flask import Flask
-from service import stock_info_service
-from entity.stock_info import StockInfoEncoder
+from service import StockInfoService
+from entity import StockInfoEncoder
 
 app = Flask(__name__)
+stock_info_service = StockInfoService()
 
 
 @app.route('/get/stock/info')

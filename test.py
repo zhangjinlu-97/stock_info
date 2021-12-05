@@ -1,4 +1,5 @@
-import requests
+import yfinance as yf
+msft = yf.Ticker("MSFT")
 
-r = requests.get("https://xueqiu.com/S/?exchange=US")
-print(r)
+# get stock info
+print(msft.info)

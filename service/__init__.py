@@ -1,1 +1,1 @@
-from service import stock_info_service
+from service.stock_info_service import StockInfoService

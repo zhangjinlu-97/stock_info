@@ -1,2 +1,2 @@
-from dao import stock_info_dao
+from dao.stock_info_dao import StockInfoDao
 
