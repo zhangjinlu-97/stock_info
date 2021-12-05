@@ -1,0 +1,1 @@
+from service import stock_info_service
