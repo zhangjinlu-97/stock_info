@@ -24,7 +24,7 @@
                 </h1>
                 <el-row>
 
-                    <el-button type="primary" :loading="refreshLoading" @click="updateStockData" round>Update Data
+                    <el-button type="primary" :loading="refreshLoading" @click="updateStockData" round>Refresh Data
                     </el-button>
 
 
@@ -128,15 +128,17 @@
             },
             updateStockData() {
                 this.refreshLoading = true
-                axios.get("/update/stock/info").then(() => {
-                    axios.get("/get/stock/info").then((res) => {
-                        this.refreshLoading = false
-                        let td = res.data
-                        for (let i = 0; i < res.data.length; i++) {
-                            td.refresh_time = this.timeStampToStr(td.refresh_time)
-                        }
-                        this.tableData = td
-                    }).catch();
+                axios.get("/get/stock/info").then((res) => {
+                    let td = res.data
+                    for (let i = 0; i < td.length; i++) {
+                        td[i].refresh_time = this.timeStampToStr(td[i].refresh_time * 1000)
+                    }
+                    this.tableData = td
+                    this.refreshLoading = false
+                    this.$message({
+                        type: 'success',
+                        message: 'Data refresh succeeded'
+                    });
                 }).catch();
             },
             addNewStock() {
@@ -144,12 +146,27 @@
                     confirmButtonText: 'Add',
                     cancelButtonText: 'Cancel',
                 }).then(({value}) => {
-                    axios.get("/add/new/stock/" + value).then(() => {
+                    const loading = this.$loading({
+                        lock: true,
+                        text: 'Loading stock data',
+                        spinner: 'el-icon-loading',
+                        background: 'rgba(0, 0, 0, 0.7)'
+                    });
+                    axios.get("/add/new/stock/" + value).then((res) => {
+                        if (res.data !== '') {
+                            this.$message({
+                                type: 'error',
+                                message: 'Add ' + value + ' failed'
+                            });
+                            return
+                        }
                         this.getStockInfo();
                         this.$message({
                             type: 'success',
-                            message: 'Add ' + value + ' success!'
+                            message: 'Add ' + value + ' success'
                         });
+                    }).finally(() => {
+                        loading.close();
                     });
 
                 }).catch();
@@ -165,7 +182,7 @@
                         this.getStockInfo()
                         this.$message({
                             type: 'success',
-                            message: row.symbol + ' has been deleted!'
+                            message: row.symbol + ' has been deleted'
                         });
                     }).catch()
                 }).catch(() => {

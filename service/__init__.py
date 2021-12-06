@@ -1,1 +1,2 @@
 from service.stock_info_service import StockInfoService
+from service.update_data_cronjob import update_data_every_day

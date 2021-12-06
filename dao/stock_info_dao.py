@@ -4,8 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from entity import StockInfo
 
-DB_URL = 'mysql+mysqlconnector://username:password@xxxxx:3306' \
-         '/db_stock_info'
+DB_URL = 'mysql+mysqlconnector://top18795876066:Zjl20151342019@rm-bp1k3z55sf0g51317bo.mysql.rds.aliyuncs.com:3306/db_stock_info'
 
 
 class StockInfoDao(object):
