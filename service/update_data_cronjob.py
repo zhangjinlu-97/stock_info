@@ -1,6 +1,4 @@
 import time
-import logging
-import _thread as thread
 from service import StockInfoService
 
 

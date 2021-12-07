@@ -6,20 +6,7 @@ from entity import StockInfo
 STOCK_BASE_URL = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&interval=5min&apikey={' \
                  'apikey}&symbol={symbol}'
 COMPANY_BASE_URL = 'https://www.alphavantage.co/query?function=OVERVIEW&apikey={apikey}&symbol={symbol}'
-API_KEYS = ('FBI8NKWZZ810Q454', 'R7F3PGGXR3WKZUJ7', '4MXQG2ZWFM6GK8R2', '8KLL8D5G0E7ARPEI',
-            'WK4UCD4JSUELV9O0', 'Y700DTNFKKT0Z95G', 'WVS9ROKQZVEKS81X', '1TJW17ND0HDM5JZ1',
-            '4ZCBCSG2RFNOI43Z', '0OH86ZDP1WLT946T', 'SIGXHV6YI4JG1UWY', 'NOGXLM7ZQ3LLKVXR')
-index = 0
-
-
-def next_api_key() -> str:
-    global index
-    key = API_KEYS[index]
-    if index == len(API_KEYS) - 1:
-        index = 0
-    else:
-        index += 1
-    return key
+API_KEYS = 'FBI8NKWZZ810Q454'
 
 
 def stock_url(apikey, symbol) -> str:
@@ -34,21 +21,16 @@ def get_new_stock_info(stock_symbol: str) -> StockInfo:
     """
     获取最新股票信息
     :param stock_symbol: 需要获取的股票Symbol
-    :return 返回StockInfo列表
+    :return StockInfo
     """
     # 获取股价信息
-    surl = stock_url(next_api_key(), stock_symbol)
-    print(surl)
+    surl = stock_url(API_KEYS, stock_symbol)
     stock_info = requests.get(surl)
     stock_dict = stock_info.json()
-    print(stock_dict)
     # 获取公司信息
-    curl = company_url(next_api_key(), stock_symbol)
-    print(curl)
+    curl = company_url(API_KEYS, stock_symbol)
     company_info = requests.get(curl)
     company_dict = company_info.json()
-    print(company_dict)
-    print('========================================')
     # 将json数据转换为StockInfo对象，并返回
     last_time = stock_dict['Meta Data']['3. Last Refreshed']
     new_record = stock_dict['Time Series (5min)'][last_time]
@@ -103,7 +85,7 @@ class StockInfoService(object):
 
 
 if __name__ == '__main__':
-    url = stock_url(next_api_key(), 'IBM')
+    url = stock_url(API_KEYS, 'IBM')
     print(url)
     stock_data = requests.get(url).json()
     print(type(stock_data))

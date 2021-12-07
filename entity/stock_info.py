@@ -27,12 +27,6 @@ class StockInfo(declarative_base()):
         self.close = close
         self.volume = volume
 
-    # 对象转换为json串
-    def json(self):
-        d = self.__dict__
-        d.pop('_sa_instance_state')
-        return json.dumps(d)
-
 
 class StockInfoEncoder(json.JSONEncoder):
 

@@ -6,6 +6,8 @@ from entity import StockInfoEncoder
 
 app = Flask(__name__)
 stock_info_service = StockInfoService()
+
+
 # 启动更新数据定时任务
 thread.start_new_thread(update_data_every_day, (stock_info_service,))
 
@@ -14,18 +16,6 @@ thread.start_new_thread(update_data_every_day, (stock_info_service,))
 def get_stock_info():  # put application's code here
     stock_info_list = stock_info_service.get_stock_infos()
     return json.dumps(stock_info_list, cls=StockInfoEncoder)
-
-
-@app.route('/update/stock/info')
-def update_stock_info():
-    """
-    从yahoo finance更新最新股票信息
-    """
-    try:
-        stock_info_service.update_stock_infos()
-    except:
-        return 'err'
-    return ''
 
 
 @app.route("/add/new/stock/<symbol>")
