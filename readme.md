@@ -1,4 +1,5 @@
 # Stock Info
+# Python导论期末作业，实现了类似自选股的Web应用
 
 1. 使用Flask框架处理Web页面的请求
 2. 使用ALPHA VANTAGE的Stock Api获取股票信息
